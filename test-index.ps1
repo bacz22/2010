@@ -12,9 +12,19 @@ if ($missing.Count -gt 0) {
 
 $featuredImage = 'assets/3a60c2014b1acb44920b1.jpg'
 $heroMatch = [regex]::Match($html, '<div class="hero-image"><img src="([^"]+)"')
-$galleryMatch = [regex]::Match($html, '<div class="gallery">\s*<button[^>]+>\s*<img src="([^"]+)"')
-if ($heroMatch.Groups[1].Value -ne $featuredImage -or $galleryMatch.Groups[1].Value -ne $featuredImage) {
-  throw 'Ảnh 3a60c2014b1acb44920b1.jpg chưa đứng đầu ở ảnh chính và album.'
+$galleryMatch = [regex]::Match($html, '(?s)<div class="gallery">(.*?)</div>\s*<div class="quote-band">')
+$galleryHtml = $galleryMatch.Groups[1].Value
+if ($heroMatch.Groups[1].Value -ne $featuredImage) {
+  throw 'Ảnh 3a60c2014b1acb44920b1.jpg chưa là ảnh chính.'
+}
+if ($galleryHtml.Contains($featuredImage)) {
+  throw 'Ảnh chính vẫn còn xuất hiện trong Album của chúng mình.'
+}
+if (([regex]::Matches($galleryHtml, 'class="photo-card zoomable"')).Count -ne 9) {
+  throw 'Album phải có đúng 9 ảnh sau khi loại ảnh chính.'
+}
+if ($html.Contains('lightboxCaption') -or $html -match '<figcaption') {
+  throw 'Lightbox vẫn còn dòng chú thích ảnh.'
 }
 
 if ($html -match 'data:image') {
@@ -29,7 +39,11 @@ $required = @(
   'aria-label="Ảnh tiếp theo"',
   "event.key === 'Escape'",
   "event.key === 'ArrowLeft'",
-  "event.key === 'ArrowRight'"
+  "event.key === 'ArrowRight'",
+  '@keyframes lightboxPop',
+  '@keyframes heartFloat',
+  'class="lightbox-hearts"',
+  'classList.add(''is-switching'')'
 )
 
 $absent = @($required | Where-Object { -not $html.Contains($_) })
@@ -37,4 +51,4 @@ if ($absent.Count -gt 0) {
   throw "Thiếu chức năng lightbox: $($absent -join ', ')"
 }
 
-Write-Host "PASS: dùng đủ $($assetNames.Count) ảnh và có lightbox/điều hướng bàn phím."
+Write-Host 'PASS: ảnh chính tách khỏi album 9 ảnh, không chú thích và có hiệu ứng lightbox.'

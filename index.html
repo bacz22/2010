@@ -42,11 +42,23 @@
     .quote-band { margin-top:55px; padding:48px 30px; border-radius:34px; color:white; background:linear-gradient(135deg,#8d3d5b,#c6537c); box-shadow:var(--shadow); text-align:center; }
     .quote-band h3 { margin:0 0 12px; font-size:clamp(1.7rem,4vw,3rem); }
     footer { padding:32px 20px 45px; color:#8c6472; text-align:center; }
-    .lightbox { position:fixed; inset:0; z-index:1000; display:grid; grid-template-columns:70px minmax(0,1fr) 70px; align-items:center; gap:12px; padding:68px 20px 42px; background:rgba(25,12,18,.94); opacity:0; visibility:hidden; transition:opacity .22s,visibility .22s; }
+    .lightbox { position:fixed; inset:0; z-index:1000; display:grid; grid-template-columns:70px minmax(0,1fr) 70px; align-items:center; gap:12px; padding:68px 20px 42px; background:rgba(25,12,18,.88); backdrop-filter:blur(12px); opacity:0; visibility:hidden; transition:opacity .3s,visibility .3s; }
     .lightbox.is-open { opacity:1; visibility:visible; }
     .lightbox-figure { display:grid; place-items:center; min-width:0; height:100%; margin:0; }
-    .lightbox img { max-width:100%; max-height:calc(100vh - 135px); object-fit:contain; border-radius:12px; box-shadow:0 16px 60px rgba(0,0,0,.45); }
-    .lightbox figcaption { margin-top:12px; color:#fff; text-align:center; }
+    .lightbox img { max-width:100%; max-height:calc(100vh - 100px); object-fit:contain; border-radius:14px; box-shadow:0 18px 70px rgba(232,106,146,.36),0 16px 60px rgba(0,0,0,.5); }
+    .lightbox.is-open img { animation:lightboxPop .48s cubic-bezier(.2,.8,.2,1) both; }
+    .lightbox img.is-switching { animation:photoSwitch .38s ease both; }
+    .lightbox-hearts { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+    .lightbox-hearts span { position:absolute; bottom:8%; color:#ff8fb3; font-size:clamp(1.1rem,2.5vw,2rem); opacity:0; text-shadow:0 0 18px rgba(255,143,179,.75); }
+    .lightbox.is-open .lightbox-hearts span { animation:heartFloat 2.8s ease-in infinite; }
+    .lightbox-hearts span:nth-child(1) { left:18%; animation-delay:.1s; }
+    .lightbox-hearts span:nth-child(2) { left:33%; animation-delay:1.1s; }
+    .lightbox-hearts span:nth-child(3) { left:52%; animation-delay:.55s; }
+    .lightbox-hearts span:nth-child(4) { left:68%; animation-delay:1.55s; }
+    .lightbox-hearts span:nth-child(5) { left:82%; animation-delay:.85s; }
+    @keyframes lightboxPop { from { opacity:0; transform:scale(.82) translateY(24px); filter:blur(8px); } to { opacity:1; transform:scale(1) translateY(0); filter:blur(0); } }
+    @keyframes photoSwitch { 0% { opacity:.2; transform:scale(.95) translateX(18px); filter:blur(7px); } 100% { opacity:1; transform:scale(1) translateX(0); filter:blur(0); } }
+    @keyframes heartFloat { 0% { opacity:0; transform:translateY(0) scale(.7) rotate(-8deg); } 18% { opacity:.8; } 100% { opacity:0; transform:translateY(-72vh) scale(1.25) rotate(14deg); } }
     .lightbox-button { width:52px; height:52px; border:1px solid rgba(255,255,255,.28); border-radius:50%; color:#fff; background:rgba(255,255,255,.12); font-size:2rem; cursor:pointer; transition:.2s; }
     .lightbox-button:hover { background:rgba(255,255,255,.24); transform:scale(1.06); }
     .lightbox-close { position:absolute; top:16px; right:18px; }
@@ -80,16 +92,15 @@
     <div class="container">
       <div class="section-title"><small>Những khoảnh khắc</small><h2>Album của chúng mình</h2></div>
       <div class="gallery">
-        <button class="photo-card zoomable" data-lightbox="0" aria-label="Phóng to ảnh 1"><img src="assets/3a60c2014b1acb44920b1.jpg" alt="Kỷ niệm 1" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="1" aria-label="Phóng to ảnh 2"><img src="assets/1f7d5d52d54955170c589.jpg" alt="Kỷ niệm 2" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="2" aria-label="Phóng to ảnh 3"><img src="assets/0062eec166dae684bfcb5.jpg" alt="Kỷ niệm 3" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="3" aria-label="Phóng to ảnh 4"><img src="assets/7e28b5763c6dbc33e57c3.jpg" alt="Kỷ niệm 4" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="4" aria-label="Phóng to ảnh 5"><img src="assets/95d6dbfb53e0d3be8af18.jpg" alt="Kỷ niệm 5" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="5" aria-label="Phóng to ảnh 6"><img src="assets/aaf05dc1d5da55840ccb7.jpg" alt="Kỷ niệm 6" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="6" aria-label="Phóng to ảnh 7"><img src="assets/ab9069dce0c7609939d64.jpg" alt="Kỷ niệm 7" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="7" aria-label="Phóng to ảnh 8"><img src="assets/b05b73c2fbd97b8722c86.jpg" alt="Kỷ niệm 8" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="8" aria-label="Phóng to ảnh 9"><img src="assets/e4614878c063403d197210.jpg" alt="Kỷ niệm 9" loading="lazy"></button>
-        <button class="photo-card zoomable" data-lightbox="9" aria-label="Phóng to ảnh 10"><img src="assets/f43edf6c5677d6298f662.jpg" alt="Kỷ niệm 10" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="1" aria-label="Phóng to ảnh 1"><img src="assets/1f7d5d52d54955170c589.jpg" alt="Kỷ niệm 1" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="2" aria-label="Phóng to ảnh 2"><img src="assets/0062eec166dae684bfcb5.jpg" alt="Kỷ niệm 2" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="3" aria-label="Phóng to ảnh 3"><img src="assets/7e28b5763c6dbc33e57c3.jpg" alt="Kỷ niệm 3" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="4" aria-label="Phóng to ảnh 4"><img src="assets/95d6dbfb53e0d3be8af18.jpg" alt="Kỷ niệm 4" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="5" aria-label="Phóng to ảnh 5"><img src="assets/aaf05dc1d5da55840ccb7.jpg" alt="Kỷ niệm 5" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="6" aria-label="Phóng to ảnh 6"><img src="assets/ab9069dce0c7609939d64.jpg" alt="Kỷ niệm 6" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="7" aria-label="Phóng to ảnh 7"><img src="assets/b05b73c2fbd97b8722c86.jpg" alt="Kỷ niệm 7" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="8" aria-label="Phóng to ảnh 8"><img src="assets/e4614878c063403d197210.jpg" alt="Kỷ niệm 8" loading="lazy"></button>
+        <button class="photo-card zoomable" data-lightbox="9" aria-label="Phóng to ảnh 9"><img src="assets/f43edf6c5677d6298f662.jpg" alt="Kỷ niệm 9" loading="lazy"></button>
       </div>
       <div class="quote-band"><h3>“Điều anh mong nhất là mỗi ngày bên anh, em đều cảm thấy được yêu thương.”</h3><p>20 • 10 • 2026 — Cảm ơn em vì đã trở thành một phần thật đặc biệt trong cuộc sống của anh.</p></div>
     </div>
@@ -98,9 +109,10 @@
   <footer>Made with ❤️ for my favorite girl • 20/10</footer>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Xem ảnh phóng to">
+    <div class="lightbox-hearts" aria-hidden="true"><span>♥</span><span>♥</span><span>♥</span><span>♥</span><span>♥</span></div>
     <button class="lightbox-button lightbox-close" type="button" aria-label="Đóng ảnh">×</button>
     <button class="lightbox-button lightbox-prev" type="button" aria-label="Ảnh trước">‹</button>
-    <figure class="lightbox-figure"><img id="lightboxImage" src="" alt=""><figcaption id="lightboxCaption"></figcaption></figure>
+    <figure class="lightbox-figure"><img id="lightboxImage" src="" alt=""></figure>
     <button class="lightbox-button lightbox-next" type="button" aria-label="Ảnh tiếp theo">›</button>
   </div>
 
@@ -114,17 +126,18 @@
       document.body.appendChild(petal);
     }
 
-    const photos = [...document.querySelectorAll('.gallery .photo-card img')];
+    const photos = [...document.querySelectorAll('[data-lightbox] img')];
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxCaption = document.getElementById('lightboxCaption');
     let activeIndex = 0;
 
     function showPhoto(index) {
       activeIndex = (index + photos.length) % photos.length;
       lightboxImage.src = photos[activeIndex].src;
       lightboxImage.alt = photos[activeIndex].alt;
-      lightboxCaption.textContent = `${photos[activeIndex].alt} • ${activeIndex + 1}/${photos.length}`;
+      lightboxImage.classList.remove('is-switching');
+      void lightboxImage.offsetWidth;
+      lightboxImage.classList.add('is-switching');
     }
 
     function openLightbox(index) {
